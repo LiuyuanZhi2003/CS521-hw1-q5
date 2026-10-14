@@ -40,7 +40,7 @@ func hardtanh_upper(Neuron n) =
     ((n[u] <= 1) ?
         ((((n[u] + 1) / (n[u] - n[l])) * n)- (((n[u] + 1) * n[l]) / (n[u] - n[l]))- 1): 1)));
 
-transformer hardtanh {
+transformer hardtanh_model  {
     Affine ->
         (backsubs_lower(prev.dot(curr[weight]) + curr[bias], curr),
          backsubs_upper(prev.dot(curr[weight]) + curr[bias], curr),
@@ -54,4 +54,4 @@ transformer hardtanh {
          hardtanh_upper(prev));
 }
 
-flow(forward, priority, stop, hardtanh);
+flow(forward, priority, stop, hardtanh_model );
